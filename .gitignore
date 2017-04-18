@@ -27,3 +27,7 @@
 *.exe
 *.out
 *.app
+
+# Exception folders
+ZED_sensor_interface/build/
+ZED_libviso2/build/
