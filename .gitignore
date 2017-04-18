@@ -30,4 +30,4 @@
 
 # Exception folders
 ZED_sensor_interface/build/
-ZED_libviso2/build/
+ZED_positional_tracking/build/
