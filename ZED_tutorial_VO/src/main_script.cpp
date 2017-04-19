@@ -64,11 +64,12 @@ int main(int argc, char **argv)
     // Track the camera position during 1000 frames
     int i = 0;
     sl::Pose zed_pose;
+    unsigned long long previous_timestamp, current_timestamp = 0;
     float tx, ty, tz = 0;
     float ox, oy, oz, ow = 0;
     float rx, ry, rz = 0;
     
-    while (i < 1000) {
+    while (i >= 0) {
         if (!zed.grab()) {
             // Get camera position in World frame
             sl::TRACKING_STATE tracking_state = zed.getPosition(zed_pose, sl::REFERENCE_FRAME_WORLD);
@@ -78,26 +79,31 @@ int main(int argc, char **argv)
 
             if (tracking_state == sl::TRACKING_STATE_OK) {
                 // Extract 3x1 rotation from pose
-		//sl::Vector3<float> rotation = zed_pose.getRotationVector();
-		//rx = rotation.x;
-		//ry = rotation.y;
-		//rz = rotation.z;
+		        //sl::Vector3<float> rotation = zed_pose.getRotationVector();
+		        //rx = rotation.x;
+		        //ry = rotation.y;
+		        //rz = rotation.z;
 
                 // Extract 4x1 orientation from pose
-		ox = zed_pose.getOrientation().ox;
-		oy = zed_pose.getOrientation().oy;
-		oz = zed_pose.getOrientation().oz;
-		ow = zed_pose.getOrientation().ow;
+		        ox = zed_pose.getOrientation().ox;
+		        oy = zed_pose.getOrientation().oy;
+		        oz = zed_pose.getOrientation().oz;
+		        ow = zed_pose.getOrientation().ow;
 
-                // Extract translation from pose
-		sl::Vector3<float> translation = zed_pose.getTranslation();
-		tx = translation.tx;
-		ty = translation.ty;
-		tz = translation.tz;
+                // Extract translation from pose (p_gc)
+		        sl::Vector3<float> translation = zed_pose.getTranslation();
+		        tx = translation.tx;
+		        ty = translation.ty;
+		        tz = translation.tz;
+		        
+		        // Extract previous and current timestamp
+                previous_timestamp = current_timestamp;
+                current_timestamp = zed_pose.timestamp;
+                double dt = (double) (current_timestamp - previous_timestamp) * 0.000000001;
 
 
                 // Display the translation & orientation & timestamp
-                printf("Translation: Tx: %.3f, Ty: %.3f, Tz: %.3f, Timestamp: %llu\n", tx, ty, tz, zed_pose.timestamp);
+                printf("Translation: Tx: %.3f, Ty: %.3f, Tz: %.3f, dt: %.3lf\n", tx, ty, tz, dt);
                 printf("Orientation: Ox: %.3f, Oy: %.3f, Oz: %.3f, Ow: %.3f\n\n", ox, oy, oz, ow);
                 i++;
             }
