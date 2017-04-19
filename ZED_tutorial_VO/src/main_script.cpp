@@ -116,3 +116,11 @@ int main(int argc, char **argv)
     zed.close();
     return 0;
 }
+
+
+// check camera intrinsic parameters (it automatically changes depending on image resolution)
+//printf("fx : %f \n", zed.getCameraInformation().calibration_parameters.left_cam.fx);
+//printf("fy : %f \n", zed.getCameraInformation().calibration_parameters.left_cam.fy);
+//printf("cx : %f \n", zed.getCameraInformation().calibration_parameters.left_cam.cx);
+//printf("cy : %f \n", zed.getCameraInformation().calibration_parameters.left_cam.cy);
+//usleep(10000000);
