@@ -29,5 +29,6 @@
 *.app
 
 # Exception folders
+ZED_tutorial_VO/build/
 ZED_sensor_interface/build/
 ZED_positional_tracking/build/
