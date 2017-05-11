@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
     char key = ' ';
     while (key != 'q') {
 
-        // Grab and display image and depth 
+        // Grab and display image and depth
         if (zed.grab(runtime_parameters) == SUCCESS) {
 
             zed.retrieveImage(image_zed, VIEW_LEFT); // Retrieve the left image
