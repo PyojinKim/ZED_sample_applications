@@ -123,12 +123,18 @@ int main(int argc, char **argv) {
 
             // Save ZED images
             if (toSave) {
+                // convert for depth image save
+                cv::Mat depth_ocv_save;
+                depth_ocv_save = depth_ocv * 1000;
+                depth_ocv_save.convertTo(depth_ocv_save, CV_16UC1);
+
+
                 char image_index[255];
                 sprintf(image_index, "%010d.png", image_counter);
                 std::string image_file_name;
 
                 image_file_name = folder_name_depth + image_index;
-                cv::imwrite(image_file_name, depth_ocv);
+                cv::imwrite(image_file_name, depth_ocv_save);
                 std::cout << image_file_name << std::endl;
 
                 image_file_name = folder_name_rgb + image_index;
