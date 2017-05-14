@@ -72,6 +72,13 @@ int main(int argc, char **argv) {
     Camera::sticktoCPUCore(2);
 
 
+    // Camera intrinsic parameters (it automatically changes depending on image resolution)
+    printf("fx : %f \n", zed.getCameraInformation().calibration_parameters.left_cam.fx);
+    printf("fy : %f \n", zed.getCameraInformation().calibration_parameters.left_cam.fy);
+    printf("cx : %f \n", zed.getCameraInformation().calibration_parameters.left_cam.cx);
+    printf("cy : %f \n", zed.getCameraInformation().calibration_parameters.left_cam.cy);
+
+
     // Create sl::Mat object
     sl::Mat image_zed(zed.getResolution(), MAT_TYPE_8U_C4);
     cv::Mat image_ocv(image_zed.getHeight(), image_zed.getWidth(), CV_8UC4, image_zed.getPtr<sl::uchar1>(sl::MEM_CPU));
